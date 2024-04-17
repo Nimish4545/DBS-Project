@@ -6,8 +6,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlightSearchPage {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -31,59 +34,81 @@ public class FlightSearchPage {
         frame.add(resultsPanel, BorderLayout.CENTER);
 
         searchPanel.add(new JLabel("Flight Search"));
-        searchPanel.add(new JLabel("Departure Airport:"));
-        JTextField departureAirportField = new JTextField(10);
-        searchPanel.add(departureAirportField);
 
+        // Dropdown for selecting departure airport
+        List<String> departureAirports = fetchAirportNames(); // Fetch departure airport names from the database
+        String[] departureAirportNames = departureAirports.toArray(new String[0]);
+        JComboBox<String> departureAirportComboBox = new JComboBox<>(departureAirportNames);
+        searchPanel.add(new JLabel("Departure Airport:"));
+        searchPanel.add(departureAirportComboBox);
+
+        // Dropdown for selecting arrival airport
+        List<String> arrivalAirports = fetchAirportNames(); // Fetch arrival airport names from the database
+        String[] arrivalAirportNames = arrivalAirports.toArray(new String[0]);
+        JComboBox<String> arrivalAirportComboBox = new JComboBox<>(arrivalAirportNames);
         searchPanel.add(new JLabel("Arrival Airport:"));
-        JTextField arrivalAirportField = new JTextField(10);
-        searchPanel.add(arrivalAirportField);
+        searchPanel.add(arrivalAirportComboBox);
+
+        // Dropdown for selecting an airline
+        List<String> airlines = fetchAirlineNames(); // Fetch airline names from the database
+        String[] airlineNames = airlines.toArray(new String[0]);
+        JComboBox<String> airlineComboBox = new JComboBox<>(airlineNames);
+        searchPanel.add(new JLabel("Airline:"));
+        searchPanel.add(airlineComboBox);
 
         JButton searchButton = new JButton("Search Flights");
         searchPanel.add(searchButton);
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String departureAirport = departureAirportField.getText();
-                String arrivalAirport = arrivalAirportField.getText();
-                searchFlights(departureAirport, arrivalAirport, resultsPanel);
+                String departureAirport = (String) departureAirportComboBox.getSelectedItem();
+                String arrivalAirport = (String) arrivalAirportComboBox.getSelectedItem();
+                String selectedAirline = (String) airlineComboBox.getSelectedItem();
+                // Implement search logic here, using selectedAirline, departureAirport, and arrivalAirport
+                searchFlights(departureAirport, arrivalAirport, selectedAirline, resultsPanel);
             }
         });
 
         frame.setVisible(true);
     }
 
-    private static void searchFlights(String departureAirport, String arrivalAirport, JPanel resultsPanel) {
-        // Clear previous results
-        resultsPanel.removeAll();
-
-        // Example query
-        String query = "SELECT FlightNumber, DepartureTime, ArrivalTime FROM FlightsInfo WHERE DepartureAirportCode = ? AND ArrivalAirportCode = ?";
+    private static List<String> fetchAirportNames() {
+        List<String> airports = new ArrayList<>();
+        // Example query to fetch airport names
+        String query = "SELECT AirportName FROM AirportsInfo";
 
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            // Create table model and populate it with data from the result set
-            String[] columnNames = {"Flight Number", "Departure Time", "Arrival Time"};
-            Object[][] data = new Object[rs.getFetchSize()][3];
-            int row = 0;
             while (rs.next()) {
-                data[row][0] = rs.getString("FlightNumber");
-                data[row][1] = rs.getTimestamp("DepartureTime");
-                data[row][2] = rs.getTimestamp("ArrivalTime");
-                row++;
+                airports.add(rs.getString("AirportName"));
             }
-
-            // Create table and add it to the results panel
-            JTable table = new JTable(data, columnNames);
-            JScrollPane scrollPane = new JScrollPane(table);
-            resultsPanel.add(scrollPane, BorderLayout.CENTER);
-            resultsPanel.revalidate();
-            resultsPanel.repaint();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return airports;
+    }
+
+    private static List<String> fetchAirlineNames() {
+        List<String> airlines = new ArrayList<>();
+        // Example query to fetch airline names
+        String query = "SELECT AirlineName FROM AirlinesInfo";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                airlines.add(rs.getString("AirlineName"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return airlines;
+    }
+
+    private static void searchFlights(String departureAirport, String arrivalAirport, String selectedAirline, JPanel resultsPanel) {
+        // Implement search logic here
     }
 }
