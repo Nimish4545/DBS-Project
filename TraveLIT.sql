@@ -284,6 +284,22 @@ CREATE TABLE UserPayments (
     FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
 );
 
+--inserting hotels info into the table
+INSERT INTO HotelsInfo (HotelName, City, Country, Address, Ratings, Price, AvailableRooms)
+VALUES ('Velvet Crest', 'New York', 'USA', '123 Main St', 4.5, 150.00, 100);
 
+INSERT INTO HotelsInfo (HotelName, City, Country, Address, Ratings, Price, AvailableRooms)
+VALUES ('The Moonstone Retreat', 'Los Angeles', 'USA', '456 Sunset Blvd', 4.0, 200.00, 200);
 
+INSERT INTO HotelsInfo (HotelName, City, Country, Address, Ratings, Price, AvailableRooms)
+VALUES ('The Midnight Rose Inn', 'Paris', 'France', '789 Champs-Élysées', 5.0, 300.00, 150);
 
+--inserting flights info into the table
+INSERT INTO FlightsInfo (AirlineID, AircraftID, FlightNumber, RouteID, DepartureTime, ArrivalTime, EconomySeats, BusinessSeats, PNRnumber, Price, Status)
+VALUES (100, 1001, 'AA123', 1, '2023-04-01 10:00:00', '2023-04-01 12:30:00', 150, 50, '1234567890123', 200.00, 'On-Time');
+
+INSERT INTO FlightsInfo (AirlineID, AircraftID, FlightNumber, RouteID, DepartureTime, ArrivalTime, EconomySeats, BusinessSeats, PNRnumber, Price, Status)
+VALUES (200, 2001, 'BA456', 2, '2023-04-02 14:00:00', '2023-04-02 16:30:00', 180, 60, '2345678901234', 250.00, 'Delayed');
+
+INSERT INTO FlightsInfo (AirlineID, AircraftID, FlightNumber, RouteID, DepartureTime, ArrivalTime, EconomySeats, BusinessSeats, PNRnumber, Price, Status)
+VALUES (300, 3001, 'UA789', 3, '2023-04-03 18:00:00', '2023-04-03 20:30:00', 200, 70, '3456789012345', 300.00, 'Cancelled');
