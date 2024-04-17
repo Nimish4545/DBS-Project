@@ -58,7 +58,7 @@ public class FlightSearchPage {
         resultsPanel.removeAll();
 
         // Example query
-        String query = "SELECT FlightNumber, DepartureTime, ArrivalTime FROM Flights WHERE DepartureAirport = ? AND ArrivalAirport = ?";
+        String query = "SELECT FlightNumber, DepartureTime, ArrivalTime FROM FlightsInfo WHERE DepartureAirportCode = ? AND ArrivalAirportCode = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
