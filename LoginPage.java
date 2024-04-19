@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,37 +29,37 @@ public class LoginPage {
         JLabel head_label = new JLabel("Welcome to TraveLIT");
         head_label.setHorizontalAlignment(JLabel.CENTER);
         head_label.setFont(new Font("Georgia",Font.BOLD,40));
+        head_label.setBackground(Color.lightGray);
 
         JPanel loginPanel = new JPanel();
         loginPanel.setBounds(500,50,500,100);
-        loginPanel.setLayout(new GridLayout(3,1));
+        loginPanel.setLayout(new GridBagLayout());
+        loginPanel.setBackground(Color.white);
         JLabel userLabel = new JLabel("User");
         userLabel.setFont(new Font("Arial",Font.BOLD,25));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
+        //loginPanel.add(userLabel);
 
         JTextField userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+        //loginPanel.add(userText);
 
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Arial",Font.BOLD,25));
         passwordLabel.setBounds(10, 50, 80, 25);
-        loginPanel.add(passwordLabel);
+        //loginPanel.add(passwordLabel);
 
         JPasswordField passwordText = new JPasswordField(20);
         passwordText.setBounds(100, 50, 165, 25);
-        loginPanel.add(passwordText);
+        //loginPanel.add(passwordText);
 
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(10, 80, 80, 35);
-        loginPanel.add(loginButton);
+        //loginPanel.add(loginButton);
 
         JButton registerButton = new JButton("Sign Up");
         registerButton.setBounds(180, 80, 80, 35);
-        loginPanel.add(registerButton);
-        loginPanel.setAlignmentX(SwingConstants.CENTER);
-        loginPanel.setAlignmentY(SwingConstants.CENTER);
+        //loginPanel.add(registerButton);
 
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -72,15 +71,39 @@ public class LoginPage {
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Implement registration logic here
-                System.out.println("Register button clicked");
+                new SignUpPage();
             }
         });
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(10, 10, 10, 10); // Adjust spacing
+
+        loginPanel.add(userLabel, gbc);
+        gbc.gridy++;
+        loginPanel.add(userText, gbc);
+        gbc.gridy++;
+        loginPanel.add(passwordLabel, gbc);
+        gbc.gridy++;
+        loginPanel.add(passwordText, gbc);
+        gbc.gridy++;
+        gbc.gridwidth = 2; // Span two columns
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        loginPanel.add(loginButton, gbc);
+        gbc.gridy++;
+        gbc.gridwidth = 2; // Span two columns
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Fill horizontally
+        loginPanel.add(registerButton, gbc);
+
+        loginPanel.setAlignmentX(SwingConstants.CENTER);
+        loginPanel.setAlignmentY(SwingConstants.CENTER);
 
         JPanel helpPanel = new JPanel();
         helpPanel.add(head_label);
         helpPanel.add(loginPanel);
         
-
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
         panel2.setBounds(430,0,570,700);
@@ -107,4 +130,4 @@ public class LoginPage {
     public static void main(String args[]){
         new LoginPage();
     }
-} 
+}
