@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SignUpPage {
+    JFrame frame;
     SignUpPage(){
         ImageIcon image = new ImageIcon("Images/BigLogo.png");
         
@@ -32,136 +33,205 @@ public class SignUpPage {
 
         JPanel loginPanel = new JPanel();
         loginPanel.setBounds(500,50,500,100);
-        loginPanel.setLayout(new GridLayout(12,1));
+        loginPanel.setLayout(new GridBagLayout());
         loginPanel.setBackground(Color.white);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(10, 10, 10, 10); // Adjust spacing
 
         JLabel userLabel = new JLabel("First Name");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         JTextField userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("Last Name");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("E-mail");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("Date of Birth");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("Address");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("City");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("State");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         userLabel = new JLabel("Country");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy--;
 
         userLabel = new JLabel("Zip Code");
         userLabel.setFont(new Font("Arial",Font.PLAIN,20));
         userLabel.setBounds(10, 20, 80, 25);
-        loginPanel.add(userLabel);
 
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
-        loginPanel.add(userText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Arial",Font.PLAIN,20));
         passwordLabel.setBounds(10, 50, 80, 25);
-        loginPanel.add(passwordLabel);
 
         JPasswordField passwordText = new JPasswordField(20);
         passwordText.setBounds(100, 50, 165, 25);
-        loginPanel.add(passwordText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         passwordLabel = new JLabel("Confirm Password");
         passwordLabel.setFont(new Font("Arial",Font.PLAIN,20));
         passwordLabel.setBounds(10, 50, 80, 25);
-        loginPanel.add(passwordLabel);
 
         passwordText = new JPasswordField(20);
         passwordText.setBounds(100, 50, 165, 25);
-        loginPanel.add(passwordText);
+
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Color.white);
+        inputPanel.add(userLabel);
+        inputPanel.add(userText);
+        loginPanel.add(inputPanel, gbc);
+        gbc.gridy++;
 
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(10, 80, 80, 35);
-        loginPanel.add(loginButton);
+        gbc.gridwidth = 2; // Span two columns
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        loginPanel.add(loginButton, gbc);
+        gbc.gridy++;
 
         JButton registerButton = new JButton("Sign Up");
         registerButton.setBounds(180, 80, 80, 35);
-        loginPanel.add(registerButton);
+        gbc.gridwidth = 2; // Span two columns
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        loginPanel.add(registerButton, gbc);
+        gbc.gridy++;
         loginPanel.setAlignmentX(SwingConstants.CENTER);
         loginPanel.setAlignmentY(SwingConstants.CENTER);
 
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Implement login logic here
-                System.out.println("Login button clicked");
+                frame.dispose();
+                new LoginPage();
             }
         });
 
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Implement registration logic here
-                System.out.println("Register button clicked");
+                JOptionPane.showMessageDialog(registerButton, "You are successfully Signed Up to TraveLIT!", "Sign Up Confirmation", JOptionPane.PLAIN_MESSAGE);
+                frame.dispose();
+                new LoginPage();
             }
         });
 
         JPanel helpPanel = new JPanel();
         helpPanel.add(head_label);
         helpPanel.add(loginPanel);
-        
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
@@ -176,7 +246,7 @@ public class SignUpPage {
         panel2.add(loginPanel);
         panel2.add(Box.createVerticalGlue());
         
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setLayout(new GridLayout(1,2));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,11 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class HomePage implements MouseListener{
-    JButton flightsButton;
-    JFrame frame;
+public class HomePage {
+    private JButton flightsButton;
+    private JFrame frame;
+
     HomePage() {
         // Create main frame
         frame = new JFrame("Home Page | TraveLIT");
@@ -66,14 +69,69 @@ public class HomePage implements MouseListener{
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         flightsButton = createStyledButton("Flights", Color.BLUE, Color.BLACK);
-        flightsButton.addMouseListener(this);
+        flightsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openFlightBookingPage();
+            }
+        });
+
         JButton hotelsButton = createStyledButton("Hotels", Color.GREEN.darker(), Color.BLACK);
-        JButton paymentsButton = createStyledButton("Payments", Color.ORANGE, Color.BLACK);
-        JButton cancellationsButton = createStyledButton("Cancellations", Color.yellow, Color.BLACK);
+        hotelsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openHotelBookingPage();
+            }
+
+            private void openHotelBookingPage() {
+                frame.dispose();
+                new HotelBookingPage();
+            }
+        });
+
+        JButton paymentsButton = createStyledButton("Payments", Color.magenta, Color.BLACK);
+        paymentsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openPaymentPage();
+            }
+
+            private void openPaymentPage() {
+                frame.dispose();
+                new PaymentGatewayPage(); 
+            }
+        });
+
+        JButton bookingsButton = createStyledButton("Bookings", Color.ORANGE, Color.BLACK);
+        bookingsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openBookingPage();
+            }
+
+            private void openBookingPage() {
+                frame.dispose();
+                new BookingsPage(); 
+            }
+        });
+
+        JButton cancellationsButton = createStyledButton("Cancellations", Color.YELLOW, Color.BLACK);
+        cancellationsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openCancellationPage();
+            }
+
+            private void openCancellationPage() {
+                frame.dispose();
+                new BookingCancellationsPage();
+            }
+        });
 
         buttonPanel.add(flightsButton);
         buttonPanel.add(hotelsButton);
         buttonPanel.add(paymentsButton);
+        buttonPanel.add(bookingsButton);
         buttonPanel.add(cancellationsButton);
 
         frame.add(buttonPanel, BorderLayout.SOUTH);
@@ -92,37 +150,12 @@ public class HomePage implements MouseListener{
         return button;
     }
 
-    public void mouseEntered(MouseEvent e){
-        flightsButton.setBackground(Color.ORANGE);
+    private void openFlightBookingPage() {
+        frame.dispose(); // Close current frame
+        new FlightBookingPage(); // Open FlightBookingPage
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new HomePage();
-        });
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+        SwingUtilities.invokeLater(HomePage::new);
     }
 }

@@ -4,14 +4,13 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class FlightBookingPage {
-
     JFrame frame;
-    JPanel topPanel, inputPanel, resultPanel;
+    JPanel topPanel, inputPanel, resultPanel, buttonPanel;
     JLabel textLabel, FlightBookingsLabel, UserNameLabel, resultLabel, departureImageLabel;
     ImageIcon image1, userDisplayIcon, departureImage;
     JComboBox<String> departureComboBox, destinationComboBox, travelDateComboBox, flightPlanComboBox, flightFareComboBox;
     JSpinner passengersSpinner;
-    JButton searchButton;
+    JButton searchButton, returnButton;
     JList<String> flightList;
     DefaultListModel<String> flightListModel;
 
@@ -23,12 +22,15 @@ public class FlightBookingPage {
         topPanel = new JPanel();
         inputPanel = new JPanel();
         resultPanel = new JPanel();
+        buttonPanel = new JPanel(); // Panel for buttons
         userDisplayIcon = new ImageIcon("Images/username.png");
         image1 = new ImageIcon("Images/logo.png");
 
+        // Set layouts for panels
         topPanel.setLayout(new BorderLayout());
         inputPanel.setLayout(new GridBagLayout()); // Use GridBagLayout for centering
         resultPanel.setLayout(new BorderLayout());
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Button panel layout
 
         FlightBookingsLabel.setForeground(Color.black);
         FlightBookingsLabel.setFont(new Font("MV Boli", Font.BOLD, 30));
@@ -46,14 +48,14 @@ public class FlightBookingPage {
         UserNameLabel.setIconTextGap(10);
 
         // Example departure and destination cities
-        String[] cities = {"New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"};
+        String[] cities = {"Bangalore", "New Delhi", "Mumbai", "Chennai", "Kolkata", "Chandigarh", "Hyderabad", "Pune", "Ahmedabad", "Jaipur"};
 
         // Add dropdown combo boxes for departure, destination, travel date, flight plan, flight fare, and number of passengers
         departureComboBox = new JComboBox<>(cities);
         destinationComboBox = new JComboBox<>(cities);
         String[] dates = {"2024-04-15", "2024-04-16", "2024-04-17"}; // Example dates
         travelDateComboBox = new JComboBox<>(dates);
-        String[] plans = {"Economy", "Business", "First Class"}; // Example flight plans
+        String[] plans = {"Economy", "Business"}; // Example flight plans
         flightPlanComboBox = new JComboBox<>(plans);
         String[] fares = {"Low Fare", "Standard Fare", "Full Fare"}; // Example flight fares
         flightFareComboBox = new JComboBox<>(fares);
@@ -79,9 +81,11 @@ public class FlightBookingPage {
         passengersSpinner.setPreferredSize(new Dimension(200, 30));
 
         searchButton = new JButton("Search Available Flights");
+        returnButton = new JButton("Return to Homepage"); // Create return button
 
         // Set preferred size for JButton
         searchButton.setPreferredSize(new Dimension(200, 30));
+        returnButton.setPreferredSize(new Dimension(200, 30)); // Set preferred size for return button
 
         resultLabel = new JLabel("Flight Search Results:");
         // Increase the font size of the result label
@@ -95,66 +99,9 @@ public class FlightBookingPage {
         searchButton.setForeground(Color.BLACK);
         searchButton.setBackground(Color.CYAN);
 
-        // Add mouse listener to JComboBoxes
-        departureComboBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                departureComboBox.setBackground(Color.LIGHT_GRAY); // Change background color when mouse enters
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                departureComboBox.setBackground(Color.WHITE); // Restore default background color when mouse exits
-            }
-        });
-
-        destinationComboBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                destinationComboBox.setBackground(Color.LIGHT_GRAY); // Change background color when mouse enters
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                destinationComboBox.setBackground(Color.WHITE); // Restore default background color when mouse exits
-            }
-        });
-
-        travelDateComboBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                travelDateComboBox.setBackground(Color.LIGHT_GRAY); // Change background color when mouse enters
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                travelDateComboBox.setBackground(Color.WHITE); // Restore default background color when mouse exits
-            }
-        });
-
-        flightPlanComboBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                flightPlanComboBox.setBackground(Color.LIGHT_GRAY); // Change background color when mouse enters
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                flightPlanComboBox.setBackground(Color.WHITE); // Restore default background color when mouse exits
-            }
-        });
-
-        flightFareComboBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                flightFareComboBox.setBackground(Color.LIGHT_GRAY); // Change background color when mouse enters
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                flightFareComboBox.setBackground(Color.WHITE); // Restore default background color when mouse exits
-            }
-        });
+        returnButton.setFocusable(false); // Set focusable for return button
+        returnButton.setForeground(Color.BLACK);
+        returnButton.setBackground(Color.WHITE);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -163,6 +110,10 @@ public class FlightBookingPage {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         // Create a panel to hold the departure image and label
+        JPanel returnPanel = new JPanel();
+        returnPanel.add(returnButton);
+        inputPanel.add(returnPanel);
+
         JPanel departureImagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         departureImage = new ImageIcon("Images/TraveLITlogo.png"); // Change this to the path of your image
         departureImageLabel = new JLabel(departureImage);
@@ -203,6 +154,9 @@ public class FlightBookingPage {
         resultPanel.add(resultLabel, BorderLayout.NORTH);
         resultPanel.add(new JScrollPane(flightList), BorderLayout.CENTER);
 
+        // Add components to button panel
+        buttonPanel.add(returnButton); // Add return button to button panel
+
         topPanel.add(FlightBookingsLabel, BorderLayout.CENTER);
         topPanel.add(UserNameLabel, BorderLayout.EAST);
         topPanel.add(textLabel, BorderLayout.WEST);
@@ -213,6 +167,7 @@ public class FlightBookingPage {
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(inputPanel, BorderLayout.WEST); // Align inputPanel to the left
         frame.add(resultPanel, BorderLayout.CENTER); // Display resultPanel in the center
+        frame.add(buttonPanel, BorderLayout.SOUTH); // Add buttonPanel to the bottom
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
@@ -237,6 +192,24 @@ public class FlightBookingPage {
             @Override
             public void mouseExited(MouseEvent e) {
                 searchButton.setBackground(Color.CYAN); // Restore default color when mouse exits
+            }
+        });
+
+        // Action listener for return button
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close current FlightBookingPage frame
+                frame.dispose();
+                // Open new HomePage
+                new HomePage();
+            }
+        });
+
+        returnButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                returnButton.setBackground(Color.LIGHT_GRAY);
             }
         });
     }
@@ -274,3 +247,4 @@ public class FlightBookingPage {
         new FlightBookingPage();
     }
 }
+

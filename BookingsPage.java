@@ -3,16 +3,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class PaymentGatewayPage {
-
+public class BookingsPage {
     JFrame frame;
-    JPanel topPanel, paymentPanel, rightPanel, buttonPanel;
-    JLabel textLabel, amountLabel, bookingIdLabel, paymentMethodLabel, successLabel, UserNameLabel, paymentGatewayTextLabel; // Added paymentGatewayTextLabel
+    JPanel topPanel, bookingsPanel, rightPanel, buttonPanel;
+    JLabel textLabel, amountLabel, userIdLabel, paymentMethodLabel, successLabel, UserNameLabel, bookingTextLabel; // Added paymentGatewayTextLabel
     JLabel bookingIdValueLabel, amountValueLabel;
     JComboBox<String> paymentMethodComboBox;
-    JButton payButton, returnButton;
+    JButton bookButton, returnButton;
     JTextArea paymentTextArea;
     ImageIcon image1, userDisplayIcon;
+    JRadioButton flightButton, hotelButton;
 
     // Database connection parameters
     String url = "jdbc:mysql://localhost:3306/your_database_name";
@@ -20,8 +20,8 @@ public class PaymentGatewayPage {
     String password = "your_password";
     Connection connection;
 
-    public PaymentGatewayPage() {
-        frame = new JFrame("Payment Gateway | TraveLIT");
+    public BookingsPage() {
+        frame = new JFrame("Bookings | TraveLIT");
 
         topPanel = new JPanel();
         UserNameLabel = new JLabel();
@@ -31,17 +31,26 @@ public class PaymentGatewayPage {
         userDisplayIcon = new ImageIcon("Images/username.png");
 
         textLabel = new JLabel("TraveLIT");
-        paymentPanel = new JPanel();
+        bookingsPanel = new JPanel();
         buttonPanel = new JPanel();
-        paymentPanel.setLayout(new GridBagLayout()); // Change to GridBagLayout for more precise component placement
+        bookingsPanel.setLayout(new GridBagLayout()); // Change to GridBagLayout for more precise component placement
 
+
+        flightButton = new JRadioButton("Flight");
+        hotelButton = new JRadioButton("Hotel");
+        ButtonGroup group = new ButtonGroup();
+        group.add(flightButton);
+        group.add(hotelButton);
+        JPanel radioPanel = new JPanel();
+        radioPanel.add(flightButton);
+        radioPanel.add(hotelButton);
         paymentMethodLabel = new JLabel("Payment Method:");
-        amountLabel = new JLabel("Amount:");
-        bookingIdLabel = new JLabel("Booking ID:");
+        amountLabel = new JLabel("Total Price:");
+        userIdLabel = new JLabel("User ID:");
         paymentMethodComboBox = new JComboBox<>(new String[]{"Credit Card", "Debit Card", "PayPal"});
         amountValueLabel = new JLabel("100"); // Example amount
         bookingIdValueLabel = new JLabel("123456"); // Example booking ID
-        payButton = new JButton("Proceed to Pay");
+        bookButton = new JButton("Book Now");
         returnButton = new JButton("Return to Homepage");
 
         textLabel.setForeground(Color.white);
@@ -55,9 +64,9 @@ public class PaymentGatewayPage {
         UserNameLabel.setHorizontalTextPosition(JLabel.LEFT);
         UserNameLabel.setIconTextGap(10);
 
-        paymentGatewayTextLabel = new JLabel("Payment Gateway"); // Create and initialize the paymentGatewayTextLabel
-        paymentGatewayTextLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center align the text
-        paymentGatewayTextLabel.setFont(new Font("MV Boli", Font.BOLD, 30)); // Set font and size
+        bookingTextLabel = new JLabel("Bookings"); // Create and initialize the paymentGatewayTextLabel
+        bookingTextLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center align the text
+        bookingTextLabel.setFont(new Font("Arial", Font.BOLD, 30)); // Set font and size
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -65,27 +74,29 @@ public class PaymentGatewayPage {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(10, 10, 10, 10); // Adjust spacing
 
-        paymentPanel.add(bookingIdLabel, gbc);
+        bookingsPanel.add(radioPanel, gbc);
         gbc.gridy++;
-        paymentPanel.add(amountLabel, gbc);
+        bookingsPanel.add(userIdLabel, gbc);
         gbc.gridy++;
-        paymentPanel.add(paymentMethodLabel, gbc);
+        bookingsPanel.add(amountLabel, gbc);
         gbc.gridy++;
-        paymentPanel.add(paymentMethodComboBox, gbc);
+        bookingsPanel.add(paymentMethodLabel, gbc);
+        gbc.gridy++;
+        bookingsPanel.add(paymentMethodComboBox, gbc);
         gbc.gridy++;
         gbc.gridwidth = 2; // Span two columns
         gbc.fill = GridBagConstraints.HORIZONTAL; // Fill horizontally
-        paymentPanel.add(payButton, gbc);
+        bookingsPanel.add(bookButton, gbc);
 
-        payButton.setPreferredSize(new Dimension(150, 30)); // Set preferred size for the button
-        payButton.setFocusable(false); // Set button focusable
+        bookButton.setPreferredSize(new Dimension(150, 30)); // Set preferred size for the button
+        bookButton.setFocusable(false); // Set button focusable
         paymentMethodComboBox.setPreferredSize(new Dimension(150, 30)); // Set preferred size for the combo box
         
-        payButton.addActionListener(new ActionListener() {
+        bookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open payment gateway in JOptionPane
-                openPaymentGateway();
+                //openPaymentGateway();
             }
         });
 
@@ -98,9 +109,7 @@ public class PaymentGatewayPage {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Close current FlightBookingPage frame
                 frame.dispose();
-                // Open new HomePage
                 new HomePage();
             }
         });
@@ -113,14 +122,14 @@ public class PaymentGatewayPage {
         });
 
         topPanel.add(textLabel, BorderLayout.WEST);
-        topPanel.add(paymentGatewayTextLabel, BorderLayout.CENTER); // Add paymentGatewayTextLabel to the center of topPanel
+        topPanel.add(bookingTextLabel, BorderLayout.CENTER); // Add paymentGatewayTextLabel to the center of topPanel
         topPanel.add(UserNameLabel, BorderLayout.EAST);
         topPanel.setBackground(Color.orange);
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // Right panel to display payments
         rightPanel = new JPanel(new BorderLayout());
-        successLabel = new JLabel("Successful Payments:");
+        successLabel = new JLabel("Successful Bookings:");
         successLabel.setHorizontalAlignment(SwingConstants.LEFT);
         successLabel.setFont(new Font(successLabel.getFont().getName(), Font.BOLD, 20)); // Increase font size
         paymentTextArea = new JTextArea(10, 30);
@@ -132,7 +141,7 @@ public class PaymentGatewayPage {
 
         frame.setLayout(new BorderLayout());
         frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(paymentPanel, BorderLayout.WEST); // Adjusted to add paymentPanel to the WEST region
+        frame.add(bookingsPanel, BorderLayout.WEST);
         frame.add(rightPanel, BorderLayout.CENTER); // Added rightPanel to the CENTER region
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -141,7 +150,7 @@ public class PaymentGatewayPage {
         frame.setVisible(true);
 
         // Populate payment text area initially
-        refreshPaymentTextArea();
+        refreshBookingTextArea();
         addComboBoxMouseListener();
         addButtonMouseListener();
         connectToDatabase(); // Connect to database after UI initialization
@@ -157,42 +166,7 @@ public class PaymentGatewayPage {
         }
     }
 
-    private void openPaymentGateway() {
-        // Create and show a JOptionPane to simulate a payment gateway
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
-        panel.add(new JLabel("Card Number:"));
-        JTextField cardNumberField = new JTextField();
-        panel.add(cardNumberField);
-        panel.add(new JLabel("Expiry Date:"));
-        JTextField expiryDateField = new JTextField();
-        panel.add(expiryDateField);
-        panel.add(new JLabel("CVV:"));
-        JTextField cvvField = new JTextField();
-        panel.add(cvvField);
-
-        int result = JOptionPane.showConfirmDialog(frame, panel, "Payment Gateway", JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            // Proceed with payment if OK is clicked
-            String cardNumber = cardNumberField.getText();
-            String expiryDate = expiryDateField.getText();
-            String cvv = cvvField.getText();
-
-            // Add payment to the database
-            String amount = amountValueLabel.getText();
-            String bookingId = bookingIdValueLabel.getText();
-            String paymentMethod = (String) paymentMethodComboBox.getSelectedItem();
-
-            if (connection != null) {
-                addPaymentToDatabase(bookingId, amount, paymentMethod);
-                showSuccessMessage();
-                // Refresh payment text area
-                refreshPaymentTextArea();
-            }
-        }
-    }
-
-    private void addPaymentToDatabase(String bookingId, String amount, String paymentMethod) {
+    private void addBookingToDatabase(String bookingId, String amount, String paymentMethod) {
         try {
             String query = "INSERT INTO payments (booking_id, amount, payment_method) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -206,10 +180,10 @@ public class PaymentGatewayPage {
         }
     }
 
-    private void refreshPaymentTextArea() {
+    private void refreshBookingTextArea() {
         try {
             if (connection != null) {
-                StringBuilder paymentDetails = new StringBuilder();
+                StringBuilder bookingDetails = new StringBuilder();
                 String query = "SELECT * FROM payments";
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
@@ -217,13 +191,13 @@ public class PaymentGatewayPage {
                     String bookingId = resultSet.getString("booking_id");
                     String amount = resultSet.getString("amount");
                     String paymentMethod = resultSet.getString("payment_method");
-                    paymentDetails.append("Booking ID: ").append(bookingId).append(", Amount: ").append(amount).append(", Payment Method: ").append(paymentMethod).append("\n");
+                    bookingDetails.append("Booking ID: ").append(bookingId).append(", Amount: ").append(amount).append(", Payment Method: ").append(paymentMethod).append("\n");
                 }
-                paymentTextArea.setText(paymentDetails.toString());
+                paymentTextArea.setText(bookingDetails.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Failed to retrieve payment data from the database.");
+            JOptionPane.showMessageDialog(null, "Failed to retrieve booking data from the database.");
         }
     }
 
@@ -244,17 +218,17 @@ public class PaymentGatewayPage {
     }
 
     private void addButtonMouseListener() {
-        payButton.addMouseListener(new MouseAdapter() {
+        bookButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 // Change color when mouse enters
-                payButton.setBackground(Color.GREEN);
+                bookButton.setBackground(Color.GREEN);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // Restore default color when mouse exits
-                payButton.setBackground(UIManager.getColor("Button.background"));
+                bookButton.setBackground(UIManager.getColor("Button.background"));
             }
         });
     }
@@ -264,6 +238,6 @@ public class PaymentGatewayPage {
     }
 
     public static void main(String[] args) {
-        new PaymentGatewayPage();
+        new BookingsPage();
     }
 }

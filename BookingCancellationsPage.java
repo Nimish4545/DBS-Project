@@ -4,15 +4,14 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class BookingCancellationsPage {
-
     JFrame frame;
-    JPanel topPanel, cancellationPanel, rightPanel;
+    JPanel topPanel, cancellationPanel, rightPanel, buttonPanel;
     JLabel textLabel, cancellationReasonLabel, successLabel, UserNameLabel, paymentCancellationsTextLabel, bookingIdLabel, cancellationDateLabel, refundAmountLabel;
     JTextArea cancellationReasonTextArea;
     JButton cancelButton;
+    JButton returnButton;
     JTextArea paymentTextArea;
     ImageIcon image1, userDisplayIcon;
-
     // Database connection parameters
     String url = "jdbc:mysql://localhost:3306/your_database_name";
     String username = "your_username";
@@ -24,6 +23,7 @@ public class BookingCancellationsPage {
 
         topPanel = new JPanel();
         UserNameLabel = new JLabel();
+        buttonPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.setBackground(Color.ORANGE);
         image1 = new ImageIcon("Images/logo.png");
@@ -42,7 +42,9 @@ public class BookingCancellationsPage {
         cancellationReasonLabel = new JLabel("Cancellation Reason:");
         cancellationReasonTextArea = new JTextArea(5, 20);
         cancelButton = new JButton("Cancel Booking");
+        returnButton = new JButton("Return to Homepage");
         cancelButton.setBackground(Color.CYAN);
+        returnButton.setPreferredSize(new Dimension(200, 30));
 
         // Additional labels for cancellation date and refund amount
         cancellationDateLabel = new JLabel("Cancellation Date: ");
@@ -117,6 +119,29 @@ public class BookingCancellationsPage {
             }
         });
 
+        returnButton.setFocusable(false); // Set focusable for return button
+        returnButton.setForeground(Color.BLACK);
+        returnButton.setBackground(Color.WHITE);
+
+        buttonPanel.add(returnButton);
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close current FlightBookingPage frame
+                frame.dispose();
+                // Open new HomePage
+                new HomePage();
+            }
+        });
+
+        returnButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                returnButton.setBackground(Color.LIGHT_GRAY);
+            }
+        });
+
         topPanel.add(textLabel, BorderLayout.WEST);
         topPanel.add(paymentCancellationsTextLabel, BorderLayout.CENTER);
         topPanel.add(UserNameLabel, BorderLayout.EAST);
@@ -125,6 +150,7 @@ public class BookingCancellationsPage {
 
         // Right panel to display payments
         rightPanel = new JPanel(new BorderLayout());
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
         successLabel = new JLabel("Successful Booking Cancellations:");
         successLabel.setHorizontalAlignment(SwingConstants.LEFT);
         successLabel.setFont(new Font(successLabel.getFont().getName(), Font.BOLD, 20));
@@ -139,6 +165,7 @@ public class BookingCancellationsPage {
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(cancellationPanel, BorderLayout.WEST);
         frame.add(rightPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);

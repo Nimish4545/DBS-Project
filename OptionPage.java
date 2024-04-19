@@ -40,7 +40,7 @@ public class OptionPage {
             }
         });
 
-        frame = new JFrame("User Options | TraveLIT");
+        frame = new JFrame();
         frame.add(optionPanel);
         frame.setVisible(true);
         frame.pack();

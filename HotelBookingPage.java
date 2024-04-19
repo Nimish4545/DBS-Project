@@ -6,12 +6,12 @@ import java.sql.*;
 public class HotelBookingPage {
 
     JFrame frame;
-    JPanel topPanel, inputPanel, resultPanel;
+    JPanel topPanel, inputPanel, resultPanel, buttonPanel;
     JLabel textLabel, HotelBookingsLabel, UserNameLabel, resultLabel, hotelImageLabel, leftPanelImageLabel;
     ImageIcon image1, userDisplayIcon, hotelImage, leftPanelImage;
     JComboBox<String> locationComboBox, checkInDateComboBox, checkOutDateComboBox, roomTypeComboBox;
     JSpinner guestsSpinner;
-    JButton searchButton;
+    JButton searchButton, returnButton;
     JList<String> hotelList;
     DefaultListModel<String> hotelListModel;
 
@@ -22,12 +22,14 @@ public class HotelBookingPage {
         frame = new JFrame("Hotel Bookings | TraveLIT");
         topPanel = new JPanel();
         inputPanel = new JPanel();
+        buttonPanel = new JPanel();
         resultPanel = new JPanel();
         userDisplayIcon = new ImageIcon("Images/username.png");
         image1 = new ImageIcon("Images/logo.png");
 
         // Load the image for the left panel
         leftPanelImage = new ImageIcon("Images/TraveLITlogo.png");
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
         topPanel.setLayout(new BorderLayout());
         inputPanel.setLayout(new GridBagLayout()); // Use GridBagLayout for centering
@@ -49,7 +51,7 @@ public class HotelBookingPage {
         UserNameLabel.setIconTextGap(10);
 
         // Example hotel locations
-        String[] locations = {"New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"};
+        String[] locations = {"Bangalore", "New Delhi", "Mumbai", "Chennai", "Kolkata", "Chandigarh", "Hyderabad", "Pune", "Ahmedabad", "Jaipur"};
 
         // Add dropdown combo boxes for location, check-in date, check-out date, room type, and number of guests
         locationComboBox = new JComboBox<>(locations);
@@ -78,9 +80,11 @@ public class HotelBookingPage {
         guestsSpinner.setPreferredSize(new Dimension(200, 30));
 
         searchButton = new JButton("Search Available Hotels");
+        returnButton = new JButton("Return to Homepage");
 
         // Set preferred size for JButton
         searchButton.setPreferredSize(new Dimension(200, 30));
+        returnButton.setPreferredSize(new Dimension(200, 30));
 
         resultLabel = new JLabel("Hotel Search Results:");
         // Increase the font size of the result label
@@ -93,6 +97,10 @@ public class HotelBookingPage {
         searchButton.setFocusable(false);
         searchButton.setForeground(Color.BLACK);
         searchButton.setBackground(Color.CYAN);
+
+        returnButton.setFocusable(false); // Set focusable for return button
+        returnButton.setForeground(Color.BLACK);
+        returnButton.setBackground(Color.WHITE);
 
         // Add mouse listener to JComboBoxes
         locationComboBox.addMouseListener(new MouseAdapter() {
@@ -182,6 +190,7 @@ public class HotelBookingPage {
         inputPanel.add(guestsSpinner, gbc);
         gbc.gridy++;
         inputPanel.add(searchButton, gbc);
+        
 
         // Increase the size of the input panel
         inputPanel.setPreferredSize(new Dimension(300, inputPanel.getPreferredSize().height));
@@ -195,6 +204,8 @@ public class HotelBookingPage {
         resultPanel.add(resultLabel, BorderLayout.NORTH);
         resultPanel.add(new JScrollPane(hotelList), BorderLayout.CENTER);
 
+        buttonPanel.add(returnButton);
+
         topPanel.add(HotelBookingsLabel, BorderLayout.CENTER);
         topPanel.add(UserNameLabel, BorderLayout.EAST);
         topPanel.add(textLabel, BorderLayout.WEST);
@@ -205,6 +216,7 @@ public class HotelBookingPage {
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(inputPanel, BorderLayout.WEST); // Align inputPanel to the left
         frame.add(resultPanel, BorderLayout.CENTER); // Display resultPanel in the center
+        frame.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
@@ -229,6 +241,23 @@ public class HotelBookingPage {
             @Override
             public void mouseExited(MouseEvent e) {
                 searchButton.setBackground(Color.CYAN); // Restore default color when mouse exits
+            }
+        });
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close current FlightBookingPage frame
+                frame.dispose();
+                // Open new HomePage
+                new HomePage();
+            }
+        });
+
+        returnButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                returnButton.setBackground(Color.LIGHT_GRAY);
             }
         });
     }
