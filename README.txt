@@ -1,20 +1,30 @@
  TraveLIT 
 
-TraveLIT is a comprehensive travel management system designed to streamline the process of searching for flights, hotels, and managing user logins. This project is structured around a SQL database (`TraveLIT.sql`) and includes Java Swing GUIs for user interactions. 
-
+TraveLIT is a comprehensive travel management system designed to streamline the process of searching for flights, hotels, It manages user logins, bookings, payments and cancellations. This project is structured around a SQL database (`TraveLIT.sql`) and includes Java Swing GUIs for user interactions. 
 
  Project Structure:
 
 - TraveLIT.sql: Contains the SQL schema for the TraveLIT database. This includes tables for storing information about users, flights, hotels, and more. 
 
-- DatabaseConnection.java: Provides a utility class for establishing a connection to the TraveLIT database. 
+- LoadPage.java: 
 
-- HotelSearchPage.java: Implements a Swing GUI for searching hotels. Users can select a city from a dropdown menu and view available hotels in that city. 
+- OptionPage.java
 
-- FlightSearchPage.java: Implements a Swing GUI for searching flights. Users can select departure and arrival airports and view available flights. 
+- LoginPage.java:
 
-- LoginPage.java: Implements a Swing GUI for user login. Users can enter their credentials to log in to the system. 
+- SignUpPage.java:
 
+- HomePage.java:
+
+- FlightBookingPage.java:
+
+- HotelBookingPage.java:
+
+- BookingsPage.java
+
+- PaymentGatewayPage.java:
+
+- BookingCancellationsPage.java:
 
  Prerequisites:
 
@@ -43,6 +53,10 @@ TraveLIT is a comprehensive travel management system designed to streamline the 
 
 1. Compile the Java Files: Compile all the Java files in the project. 
 
-2. Run the Login Page: Execute `LoginPage.java` to start the application. The login page will be displayed. 
+2. Run the Load Page: Execute `LoadPage.java` to start the application. The loading page will be displayed. 
 
-3. Navigate the Application: From the login page, users can navigate to the flight search and hotel search pages to perform searches. 
+3. Choose from Option Page : Select whether you are a New User or not. It will navigate you to the right place based on your selection.
+
+4. Login using your credentials : Once you have logged in on LoginPage.java, the home page is opened.
+
+5. Navigate through the Application: From the home page, users can now book flights and hotels and also confirm bookings, payments and cancellations. 
